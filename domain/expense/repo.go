@@ -1,5 +1,7 @@
 package expense
 
+import "github.com/google/uuid"
+
 type ExpenseRepository interface {
 	GetAll() ([]Expense, error)
 	GetById(uuid.UUID) (Expense, error)

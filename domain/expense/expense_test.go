@@ -1,11 +1,14 @@
-package expense
+package expense_test
 
-import "testing"
+import (
+	"finbot/domain/expense"
+	"testing"
+)
 
 func TestNewExpense(t *testing.T) {
 	type testCase struct {
 		test        string
-		amount      float32
+		amount      float64
 		desc        string
 		expectedErr error
 	}
@@ -32,11 +35,11 @@ func TestNewExpense(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.test, func(t *testing.T) {
 			obj, err := expense.NewExpense(tc.amount, tc.desc)
-			if tc.desc != "" && tc.desc != obj.desc {
-				t.Errorf("Expected descr %v, got %v", tc.desc, obj.desc)
+			if tc.desc != "" && tc.desc != obj.GetDesc() {
+				t.Errorf("Expected descr %v, got %v", tc.desc, obj.GetDesc())
 			}
-			if tc.amount != obj.amount {
-				t.Errorf("Expected amount %v, got %v", tc.amount, obj.anount)
+			if tc.amount != obj.GetAmount() {
+				t.Errorf("Expected amount %v, got %v", tc.amount, obj.GetAmount())
 			}
 			if err != tc.expectedErr {
 				t.Errorf("Expected error %v, got %v", tc.expectedErr, err)
