@@ -1,6 +1,14 @@
 package expense
 
-import "github.com/google/uuid"
+import (
+	"errors"
+	"github.com/google/uuid"
+)
+
+var (
+	ErrNotExistingExpense  = errors.New("expense is not exists")
+	ErrExpenseAlreadyExist = errors.New("expense already exists")
+)
 
 type Repository interface {
 	GetAll() ([]Expense, error)

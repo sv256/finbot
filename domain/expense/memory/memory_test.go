@@ -1,43 +1,94 @@
 package memory_test
 
-//func TestMemory_GetUser(t *testing.T) {
-//	type testCase struct {
-//		id          uuid.UUID
-//		name        string
-//		expectedErr error
-//	}
-//
-//	u, err := user.NewUser("Arnie")
-//	err != nil{
-//		t.Fatal(err)
-//	}
-//	id := u.GetId()
-//	repo := expense.Repository{
-//		users: map[uuid.UUID]user.User{
-//			id: u
-//		},
-//	}
-//
-//	testCases := []testCase{
-//		{
-//			name: "No user found by id",
-//			id: 	uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
-//			expectedErr: user.ErrUserNotFound,
-//		},{
-//			name: "User found by id",
-//			id: 	id,
-//			expectedErr: nil,
-//		},
-//	}
-//
-//	for _, tc := range testCases {
-//		t.Run(tc.name, func(t *testing.T) {
-//
-//			_, err := repo.Get(tc.id)
-//			if err != tc.expectedErr {
-//				t.Errorf("Expected error %v, got %v", tc.expectedErr, err)
-//			}
-//		})
-//	}
-//
-//}
+import (
+	"finbot/domain/expense"
+	"github.com/google/uuid"
+	"testing"
+)
+
+func TestMemoryExpenseRepository_Add(t *testing.T) {
+	repository := New()
+
+	object, err := expense.NewExpense(1.1, "shirt")
+
+	if err != nil {
+		t.Errorf(err)
+	}
+	repository.Add(object)
+
+	if len(repository.expenses) != 1 {
+		t.Errorf("Expected size of expenses : 1, got %v", len(repository.expenses))
+	}
+}
+
+func TestMemoryExpenseRepository_Get(t *testing.T) {
+	repository := New()
+	existingObject, err := expense.NewExpense(1.1, "shirt")
+	if err != nil {
+		t.Errorf(err)
+	}
+	repository.Add(existingObject)
+
+	if len(repository.expenses) != 1 {
+		t.Errorf("Expected size of expenses : 1, got %v", len(repository.expenses))
+	}
+
+	type testCase struct {
+		name        string
+		amount      float64
+		desc        string
+		id          uuid.UUID
+		expectedErr error
+	}
+
+	testCases := []testCase{
+		{
+			name:        "Gets the expense by id",
+			id:          existingObject.GetID(),
+			amount:      existingObject.GetAmount(),
+			desc:        existingObject.GetDesc(),
+			expectedErr: nil,
+		},
+		{
+			name:        "Gets non-existing expense by id",
+			id:          uuid.New(),
+			amount:      1.1,
+			desc:        existingObject.GetDesc(),
+			expectedErr: existingObject.ErrNotExistingExpense,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := repository.GetByID(tc.id)
+			if err != tc.expectedErr {
+				t.Errorf("Expected error %v, got %v", tc.expectedErr, err)
+			}
+
+		})
+	}
+
+}
+
+func TestMemoryExpenseRepository_Delete(t *testing.T) {
+	repository := New()
+	existingObject, err := expense.NewExpense(1.1, "shirt")
+	if err != nil {
+		t.Errorf(err)
+	}
+	repository.Add(existingObject)
+
+	if len(repository.expenses) != 1 {
+		t.Errorf("Expected size of expenses : 1, got %d", len(repository.expenses))
+	}
+
+	err = repository.Delete(existingObject.GetID())
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(repository.expenses) != 0 {
+		t.Errorf("Expected 0 expenses, got %d", len(repository.expenses))
+	}
+
+}
