@@ -24,43 +24,44 @@ func (mpr *MemoryExpenseRepository) GetAll() ([]expense.Expense, error) {
 	}
 	return expenses, nil
 }
-func (mpr *MemoryExpenseRepository) GetByID(id uuid.UUID) (expense.Expense, error) {
-	if exp, ok := mpr.expenses[uuid.UUID(id)]; ok {
-		return exp, nil
-	}
-	return expense.Expense{}, expenses.ErrProductNotFound
-}
 
-func (mpr *MemoryExpenseRepository) Add(newExp expense.Expense) error {
-	mpr.Lock()
-	defer mpr.Unlock()
-
-	if _, ok := mpr.expenses[newExp.GetID()]; ok {
-		return expense.ErrProductAlreadyExist
-	}
-
-	mpr.expenses[newExp.GetID()] = newExp
-
-	return nil
-}
-func (mpr *MemoryExpenseRepository) Update(newExp expense.Expense) error {
-	mpr.Lock()
-	defer mpr.Unlock()
-
-	if _, ok := mpr.expenses[newExp.GetID()]; !ok {
-		return expense.ErrProductNotFound
-	}
-
-	mpr.expenses[newExp.GetID()] = newExp
-	return nil
-}
-func (mpr *MemoryExpenseRepository) Delete(id uuid.UUID) error {
-	mpr.Lock()
-	defer mpr.Unlock()
-
-	if _, ok := mpr.expenses[id]; !ok {
-		return expense.ErrProductNotFound
-	}
-	delete(mpr.expenses, id)
-	return nil
-}
+//func (mpr *MemoryExpenseRepository) GetByID(id uuid.UUID) (expense.Expense, error) {
+//	if exp, ok := mpr.expenses[id]; ok {
+//		return exp, nil
+//	}
+//	return expense.Expense{}, expenses.ErrProductNotFound
+//}
+//
+//func (mpr *MemoryExpenseRepository) Add(newExp expense.Expense) error {
+//	mpr.Lock()
+//	defer mpr.Unlock()
+//
+//	if _, ok := mpr.expenses[newExp.GetID()]; ok {
+//		return expense.ErrProductAlreadyExist
+//	}
+//
+//	mpr.expenses[newExp.GetID()] = newExp
+//
+//	return nil
+//}
+//func (mpr *MemoryExpenseRepository) Update(newExp expense.Expense) error {
+//	mpr.Lock()
+//	defer mpr.Unlock()
+//
+//	if _, ok := mpr.expenses[newExp.GetID()]; !ok {
+//		return expense.ErrProductNotFound
+//	}
+//
+//	mpr.expenses[newExp.GetID()] = newExp
+//	return nil
+//}
+//func (mpr *MemoryExpenseRepository) Delete(id uuid.UUID) error {
+//	mpr.Lock()
+//	defer mpr.Unlock()
+//
+//	if _, ok := mpr.expenses[id]; !ok {
+//		return expense.ErrProductNotFound
+//	}
+//	delete(mpr.expenses, id)
+//	return nil
+//}
