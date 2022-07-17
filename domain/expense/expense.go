@@ -6,23 +6,36 @@ import (
 )
 
 var (
-	ErrAmountIsZero = errors.New("amount cannot be 0.0")
+	ErrAmountIsZero   = errors.New("amount cannot be 0.0")
+	ErrUserIdIsNil    = errors.New("user id cannot be nil")
+	ErrAccountIdIsNil = errors.New("account id cannot be nil")
 )
 
 type Expense struct {
-	id     uuid.UUID
-	amount float64
-	desc   string
+	id        uuid.UUID
+	userId    uuid.UUID
+	accountId uuid.UUID
+	amount    float64
+	desc      string
 }
 
-func NewExpense(amount float64, desc string) (Expense, error) {
+func NewExpense(userId uuid.UUID, accountId uuid.UUID, amount float64, desc string) (Expense, error) {
 	if amount == 0.0 {
 		return Expense{}, ErrAmountIsZero
 	}
+	if userId == uuid.Nil {
+		return Expense{}, ErrUserIdIsNil
+	}
+	if accountId == uuid.Nil {
+		return Expense{}, ErrAccountIdIsNil
+	}
+	// todo add the user & account validation
 	return Expense{
-		id:     uuid.New(),
-		amount: amount,
-		desc:   desc,
+		id:        uuid.New(),
+		userId:    userId,
+		accountId: accountId,
+		amount:    amount,
+		desc:      desc,
 	}, nil
 }
 func (e Expense) GetID() uuid.UUID {

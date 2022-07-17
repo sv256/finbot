@@ -1,8 +1,8 @@
-package account
+package account_test
 
 import (
+	"finbot/domain/account"
 	"finbot/domain/account/currency"
-	"finbot/domain/user"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -18,16 +18,16 @@ func TestAccount_NewAccount(t *testing.T) {
 
 	testCases := []testCase{
 		{
-			test:        "should return error if name is empty",
+			test:        "should return error if account number is empty",
 			userId:      uuid.New(),
-			expectedErr: user.ErrMissingValues,
+			expectedErr: account.ErrMissingValues,
 		},
 		{
 			test:           "Wrong initial balance",
 			userId:         uuid.New(),
 			accNumber:      "012345",
 			initialBalance: -1.0,
-			expectedErr:    account.ErrWrongInvalidInitialBalance,
+			expectedErr:    account.ErrInvalidInitialBalance,
 		},
 		{
 			test:           "Valid Test",
@@ -40,7 +40,7 @@ func TestAccount_NewAccount(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.test, func(t *testing.T) {
-			_, err := account.NewAccount(uuid.New(), tc.userId, currency.PLN, tc.accNumber)
+			_, err := account.NewAccount(tc.userId, currency.PLN, tc.accNumber, tc.initialBalance)
 			if err != tc.expectedErr {
 				t.Errorf("Expected error: %v, got: %v", tc.expectedErr, err)
 			}

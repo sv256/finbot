@@ -1,6 +1,7 @@
 package memory
 
 import (
+	"finbot/domain/account"
 	"github.com/google/uuid"
 	"sync"
 )
@@ -20,15 +21,15 @@ func New() *MemoryAccountRepository {
 func (mar *MemoryAccountRepository) GetAll() ([]account.Account, error) {
 	// Collect all Products from map
 	var accounts []account.Account
-	for _, account := range mar.accounts {
-		accounts = append(accounts, account)
+	for _, acc := range mar.accounts {
+		accounts = append(accounts, acc)
 	}
 	return accounts, nil
 }
 
 func (mar *MemoryAccountRepository) GetByID(id uuid.UUID) (account.Account, error) {
-	if account, ok := mar.accounts[id]; ok {
-		return account, nil
+	if acc, ok := mar.accounts[id]; ok {
+		return acc, nil
 	}
 	return account.Account{}, account.ErrAccountNotFound
 }
@@ -41,7 +42,7 @@ func (mar *MemoryAccountRepository) Add(newAcc account.Account) error {
 		return account.ErrAccountIdAlreadyExist
 	} else {
 
-		if accByNum, err := mar.accountsByAccountNumber[newAcc.GetAccountNumber()]; !err && accByNum.GetCurrency() == newAcc.GetCurrency {
+		if accByNum, err := mar.accountsByAccountNumber[newAcc.GetAccountNumber()]; !err && accByNum.GetCurrency() == newAcc.GetCurrency() {
 			return account.ErrAccountNumberAndCurrencyAlreadyExist
 		}
 	}
@@ -66,7 +67,7 @@ func (mar *MemoryAccountRepository) Update(updateAcc account.Account) error {
 	defer mar.Unlock()
 
 	if _, ok := mar.accounts[updateAcc.GetID()]; !ok {
-		return account.ErrProductNotFound
+		return account.ErrAccountNotFound
 	}
 
 	mar.accounts[updateAcc.GetID()] = updateAcc
