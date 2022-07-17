@@ -1,7 +1,7 @@
 package account_test
 
 import (
-	"finbot/domain/account"
+	"finbot/aggregate/account"
 	"finbot/domain/account/currency"
 	"github.com/google/uuid"
 	"testing"

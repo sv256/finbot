@@ -1,40 +1,41 @@
 package memory
 
 import (
+	account2 "finbot/aggregate/account"
 	"finbot/domain/account"
 	"github.com/google/uuid"
 	"sync"
 )
 
 type MemoryAccountRepository struct {
-	accounts                map[uuid.UUID]account.Account
-	accountsByAccountNumber map[string]account.Account
+	accounts                map[uuid.UUID]account2.Account
+	accountsByAccountNumber map[string]account2.Account
 	sync.Mutex
 }
 
 func New() *MemoryAccountRepository {
 	return &MemoryAccountRepository{
-		accounts: make(map[uuid.UUID]account.Account),
+		accounts: make(map[uuid.UUID]account2.Account),
 	}
 }
 
-func (mar *MemoryAccountRepository) GetAll() ([]account.Account, error) {
+func (mar *MemoryAccountRepository) GetAll() ([]account2.Account, error) {
 	// Collect all Products from map
-	var accounts []account.Account
+	var accounts []account2.Account
 	for _, acc := range mar.accounts {
 		accounts = append(accounts, acc)
 	}
 	return accounts, nil
 }
 
-func (mar *MemoryAccountRepository) GetByID(id uuid.UUID) (account.Account, error) {
+func (mar *MemoryAccountRepository) GetByID(id uuid.UUID) (account2.Account, error) {
 	if acc, ok := mar.accounts[id]; ok {
 		return acc, nil
 	}
-	return account.Account{}, account.ErrAccountNotFound
+	return account2.Account{}, account.ErrAccountNotFound
 }
 
-func (mar *MemoryAccountRepository) Add(newAcc account.Account) error {
+func (mar *MemoryAccountRepository) Add(newAcc account2.Account) error {
 	mar.Lock()
 	defer mar.Unlock()
 
@@ -43,7 +44,7 @@ func (mar *MemoryAccountRepository) Add(newAcc account.Account) error {
 	} else {
 
 		if accByNum, err := mar.accountsByAccountNumber[newAcc.GetAccountNumber()]; !err && accByNum.GetCurrency() == newAcc.GetCurrency() {
-			return account.ErrAccountNumberAndCurrencyAlreadyExist
+			return account2.ErrAccountNumberAndCurrencyAlreadyExist
 		}
 	}
 
@@ -62,7 +63,7 @@ func (mar *MemoryAccountRepository) Delete(id uuid.UUID) error {
 	return nil
 }
 
-func (mar *MemoryAccountRepository) Update(updateAcc account.Account) error {
+func (mar *MemoryAccountRepository) Update(updateAcc account2.Account) error {
 	mar.Lock()
 	defer mar.Unlock()
 

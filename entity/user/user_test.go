@@ -1,7 +1,7 @@
 package user_test
 
 import (
-	"finbot/domain/user"
+	"finbot/entity/user"
 	"github.com/google/uuid"
 	"testing"
 )

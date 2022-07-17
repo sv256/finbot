@@ -2,6 +2,7 @@ package expense
 
 import (
 	"errors"
+	"finbot/aggregate/expense"
 	"github.com/google/uuid"
 )
 
@@ -11,9 +12,9 @@ var (
 )
 
 type Repository interface {
-	GetAll() ([]Expense, error)
-	GetById(uuid.UUID) (Expense, error)
-	Add(Expense) error
-	Update(Expense) error
+	GetAll() ([]expense.Expense, error)
+	GetById(uuid.UUID) (expense.Expense, error)
+	Add(expense.Expense) error
+	Update(expense.Expense) error
 	Delete(uuid.UUID) error
 }

@@ -11,6 +11,7 @@ var (
 	ErrAccountIdIsNil = errors.New("account id cannot be nil")
 )
 
+// todo make the expense and income from the entity as transaction
 type Expense struct {
 	id        uuid.UUID
 	userId    uuid.UUID

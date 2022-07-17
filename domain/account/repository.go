@@ -2,6 +2,7 @@ package account
 
 import (
 	"errors"
+	"finbot/aggregate/account"
 	"github.com/google/uuid"
 )
 
@@ -11,9 +12,9 @@ var (
 )
 
 type AccountRepository interface {
-	GetAll() ([]Account, error)
-	GetByID(uuid uuid.UUID) (Account, error)
-	Add(account Account) error
-	Update(account Account) error
+	GetAll() ([]account.Account, error)
+	GetByID(uuid uuid.UUID) (account.Account, error)
+	Add(account account.Account) error
+	Update(account account.Account) error
 	Delete(uuid2 uuid.UUID) error
 }

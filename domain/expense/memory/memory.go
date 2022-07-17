@@ -1,7 +1,7 @@
 package memory
 
 import (
-	"finbot/domain/expense"
+	"finbot/aggregate/expense"
 	"github.com/google/uuid"
 	"sync"
 )
