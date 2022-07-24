@@ -1,7 +1,7 @@
 package memory
 
 import (
-	"finbot/aggregate/expense"
+	"finbot/aggregate/torefactor/expense"
 	"github.com/google/uuid"
 	"sync"
 )
@@ -25,31 +25,31 @@ func (mpr *MemoryExpenseRepository) GetAll() ([]expense.Expense, error) {
 	return expenses, nil
 }
 
-//func (mpr *MemoryExpenseRepository) GetByID(id uuid.UUID) (expense.Expense, error) {
+//func (mpr *MemoryExpenseRepository) GetByID(id uuid.UUID) (outcome.Expense, error) {
 //	if exp, ok := mpr.expenses[id]; ok {
 //		return exp, nil
 //	}
-//	return expense.Expense{}, expenses.ErrProductNotFound
+//	return outcome.Expense{}, expenses.ErrProductNotFound
 //}
 //
-//func (mpr *MemoryExpenseRepository) Add(newExp expense.Expense) error {
+//func (mpr *MemoryExpenseRepository) Add(newExp outcome.Expense) error {
 //	mpr.Lock()
 //	defer mpr.Unlock()
 //
 //	if _, ok := mpr.expenses[newExp.GetID()]; ok {
-//		return expense.ErrProductAlreadyExist
+//		return outcome.ErrProductAlreadyExist
 //	}
 //
 //	mpr.expenses[newExp.GetID()] = newExp
 //
 //	return nil
 //}
-//func (mpr *MemoryExpenseRepository) Update(newExp expense.Expense) error {
+//func (mpr *MemoryExpenseRepository) Update(newExp outcome.Expense) error {
 //	mpr.Lock()
 //	defer mpr.Unlock()
 //
 //	if _, ok := mpr.expenses[newExp.GetID()]; !ok {
-//		return expense.ErrProductNotFound
+//		return outcome.ErrProductNotFound
 //	}
 //
 //	mpr.expenses[newExp.GetID()] = newExp
@@ -60,7 +60,7 @@ func (mpr *MemoryExpenseRepository) GetAll() ([]expense.Expense, error) {
 //	defer mpr.Unlock()
 //
 //	if _, ok := mpr.expenses[id]; !ok {
-//		return expense.ErrProductNotFound
+//		return outcome.ErrProductNotFound
 //	}
 //	delete(mpr.expenses, id)
 //	return nil

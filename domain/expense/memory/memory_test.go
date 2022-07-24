@@ -3,7 +3,7 @@ package memory_test
 //func TestMemoryExpenseRepository_Add(t *testing.T) {
 //	repository := New()
 //
-//	object, err := expense.NewExpense(1.1, "shirt")
+//	object, err := outcome.NewExpense(1.1, "shirt")
 //
 //	if err != nil {
 //		t.Errorf(err)
@@ -17,7 +17,7 @@ package memory_test
 //
 //func TestMemoryExpenseRepository_Get(t *testing.T) {
 //	repository := New()
-//	existingObject, err := expense.NewExpense(1.1, "shirt")
+//	existingObject, err := outcome.NewExpense(1.1, "shirt")
 //	if err != nil {
 //		t.Errorf(err)
 //	}
@@ -37,14 +37,14 @@ package memory_test
 //
 //	testCases := []testCase{
 //		{
-//			name:        "Gets the expense by id",
+//			name:        "Gets the outcome by id",
 //			id:          existingObject.GetID(),
 //			amount:      existingObject.GetAmount(),
 //			desc:        existingObject.GetDesc(),
 //			expectedErr: nil,
 //		},
 //		{
-//			name:        "Gets non-existing expense by id",
+//			name:        "Gets non-existing outcome by id",
 //			id:          uuid.New(),
 //			amount:      1.1,
 //			desc:        existingObject.GetDesc(),
@@ -66,7 +66,7 @@ package memory_test
 //
 //func TestMemoryExpenseRepository_Delete(t *testing.T) {
 //	repository := New()
-//	existingObject, err := expense.NewExpense(1.1, "shirt")
+//	existingObject, err := outcome.NewExpense(1.1, "shirt")
 //	if err != nil {
 //		t.Errorf(err)
 //	}

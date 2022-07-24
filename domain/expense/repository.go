@@ -2,13 +2,13 @@ package expense
 
 import (
 	"errors"
-	"finbot/aggregate/expense"
+	"finbot/aggregate/torefactor/expense"
 	"github.com/google/uuid"
 )
 
 var (
-	ErrNotExistingExpense  = errors.New("expense is not exists")
-	ErrExpenseAlreadyExist = errors.New("expense already exists")
+	ErrNotExistingExpense  = errors.New("outcome is not exists")
+	ErrExpenseAlreadyExist = errors.New("outcome already exists")
 )
 
 type Repository interface {

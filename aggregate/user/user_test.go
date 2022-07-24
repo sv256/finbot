@@ -1,7 +1,7 @@
 package user_test
 
 import (
-	"finbot/entity/user"
+	"finbot/aggregate/user"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -16,13 +16,13 @@ func TestNewUser(t *testing.T) {
 
 	testCases := []testCase{
 		{
-			test:        "Should create a user with defined name",
+			test:        "Should create a user-a with defined name",
 			id:          uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			name:        "Andrew",
 			expectedErr: nil,
 		},
 		{
-			test:        "Should throw an error for a user without defined name",
+			test:        "Should throw an error for a user-a without defined name",
 			id:          uuid.MustParse("f47ac10b-58cc-0372-8567-0e02b2c3d479"),
 			name:        "",
 			expectedErr: user.ErrUserHasNoName,
@@ -34,8 +34,10 @@ func TestNewUser(t *testing.T) {
 			if err != tc.expectedErr {
 				t.Errorf("Expected error %v, got %v", tc.expectedErr, err)
 			}
-			if tc.name != obj.GetName() {
-				t.Errorf("Expected name %v, got %v", tc.name, obj.GetName())
+			if !obj.IsEmpty() {
+				if tc.name != obj.GetName() {
+					t.Errorf("Expected name %v, got %v", tc.name, obj.GetName())
+				}
 			}
 
 		})

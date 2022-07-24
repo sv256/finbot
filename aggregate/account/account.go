@@ -3,15 +3,16 @@ package account
 import (
 	"errors"
 	"finbot/domain/account/currency"
+	accountEntity "finbot/entity/account"
+	userEntity "finbot/entity/user"
 	"github.com/google/uuid"
 )
 
 type Account struct {
-	id        uuid.UUID
-	userId    uuid.UUID
+	item      *accountEntity.Account
+	user      *userEntity.User
 	accNumber string
 	balance   float64
-	currency  currency.Currency
 }
 
 var (
@@ -20,25 +21,30 @@ var (
 	ErrAccountNumberAndCurrencyAlreadyExist = errors.New("account number and with defined currency already exists")
 )
 
-func NewAccount(userId uuid.UUID, currency currency.Currency, accNumber string, initialBalance float64) (Account, error) {
+func NewAccount(user *userEntity.User, currency currency.Currency, accNumber string, initialBalance float64) (Account, error) {
 	if accNumber == "" {
 		return Account{}, ErrMissingValues
 	}
 	if initialBalance < 0 {
 		return Account{}, ErrInvalidInitialBalance
 	}
-	// todo add user existence validation
+	// todo add user-a existence validation
+	newAccount := &accountEntity.Account{
+		Id:        uuid.New(),
+		AccNumber: accNumber,
+		Balance:   initialBalance,
+		Currency:  currency,
+	}
 	return Account{
-		id:        uuid.New(),
-		userId:    userId,
+		item:      newAccount,
+		user:      user,
 		accNumber: accNumber,
 		balance:   initialBalance,
-		currency:  currency,
 	}, nil
 }
 
 func (a Account) GetID() uuid.UUID {
-	return a.id
+	return a.item.Id
 }
 
 func (a Account) GetAccountNumber() string {
@@ -46,5 +52,5 @@ func (a Account) GetAccountNumber() string {
 }
 
 func (a Account) GetCurrency() currency.Currency {
-	return a.currency
+	return a.item.Currency
 }

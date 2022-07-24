@@ -1,7 +1,7 @@
 package expense_test
 
 import (
-	"finbot/aggregate/expense"
+	"finbot/aggregate/torefactor/expense"
 	"github.com/google/uuid"
 	"testing"
 )

@@ -7,11 +7,11 @@ import (
 
 var (
 	ErrAmountIsZero   = errors.New("amount cannot be 0.0")
-	ErrUserIdIsNil    = errors.New("user id cannot be nil")
+	ErrUserIdIsNil    = errors.New("user-a id cannot be nil")
 	ErrAccountIdIsNil = errors.New("account id cannot be nil")
 )
 
-// todo make the expense and income from the entity as transaction
+// todo make the outcome and income from the entity as transaction
 type Expense struct {
 	id        uuid.UUID
 	userId    uuid.UUID
@@ -30,7 +30,7 @@ func NewExpense(userId uuid.UUID, accountId uuid.UUID, amount float64, desc stri
 	if accountId == uuid.Nil {
 		return Expense{}, ErrAccountIdIsNil
 	}
-	// todo add the user & account validation
+	// todo add the user-a & account validation
 	return Expense{
 		id:        uuid.New(),
 		userId:    userId,
