@@ -2,9 +2,9 @@ package account
 
 import (
 	"errors"
-	"finbot/domain/account/currency"
 	accountEntity "finbot/entity/account"
 	userEntity "finbot/entity/user"
+	"finbot/olddomain/account/currency"
 	"github.com/google/uuid"
 )
 

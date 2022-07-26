@@ -1,11 +1,11 @@
 package memory
 
 import (
-	account2 "finbot/aggregate/account"
+	aggregateAccount "finbot/aggregate/account"
 	"finbot/aggregate/user"
 	_ "finbot/aggregate/user"
-	"finbot/domain/account"
-	"finbot/domain/account/currency"
+	"finbot/olddomain/account"
+	"finbot/olddomain/account/currency"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -13,7 +13,7 @@ import (
 func TestMemoryAccountRepository_Add(t *testing.T) {
 	repo := New()
 	u, _ := user.NewUser("TestUserName1")
-	acc, err := account2.NewAccount(u.GetId(), currency.PLN, "012345", 0.1)
+	acc, err := aggregateAccount.NewAccount(u, currency.PLN, "012345", 0.1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -27,7 +27,7 @@ func TestMemoryAccountRepository_Add(t *testing.T) {
 func TestMemoryAccountRepository_Get(t *testing.T) {
 	repo := New()
 	u, _ := user.NewUser("TestUserName1")
-	existingAccount, err := account2.NewAccount(u.GetId(), currency.PLN, "012345", 0.1)
+	existingAccount, err := aggregateAccount.NewAccount(u, currency.PLN, "012345", 0.1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -67,8 +67,8 @@ func TestMemoryAccountRepository_Get(t *testing.T) {
 }
 func TestMemoryProductRepository_Delete(t *testing.T) {
 	repo := New()
-	u, _ := user_a.NewUser("TestUserName1")
-	existingAccount, err := account2.NewAccount(u.GetId(), currency.PLN, "012345", 1.1)
+	u, _ := user.NewUser("TestUserName1")
+	existingAccount, err := aggregateAccount.NewAccount(u, currency.PLN, "012345", 1.1)
 	if err != nil {
 		t.Error(err)
 	}

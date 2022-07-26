@@ -2,7 +2,7 @@ package memory
 
 import (
 	account2 "finbot/aggregate/account"
-	"finbot/domain/account"
+	"finbot/olddomain/account"
 	"github.com/google/uuid"
 	"sync"
 )

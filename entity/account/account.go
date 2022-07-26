@@ -1,7 +1,7 @@
 package account
 
 import (
-	"finbot/domain/account/currency"
+	"finbot/olddomain/account/currency"
 	"github.com/google/uuid"
 )
 
